@@ -261,6 +261,8 @@ class ContentExplorer extends Component<Props, State> {
             uploadHost,
         });
 
+        this.appRef = React.createRef();
+
         this.id = uniqueid('bce_');
 
         this.state = {
@@ -317,8 +319,8 @@ class ContentExplorer extends Component<Props, State> {
      */
     componentDidMount() {
         const { currentFolderId, defaultView }: Props = this.props;
-        this.rootElement = ((document.getElementById(this.id): any): HTMLElement);
-        this.appElement = ((this.rootElement.firstElementChild: any): HTMLElement);
+        this.appElement = ((this.appRef.current: any): HTMLElement);
+        this.rootElement = ((this.appElement.parentElement: any): HTMLElement);
 
         switch (defaultView) {
             case DEFAULT_VIEW_RECENTS:
@@ -1625,7 +1627,7 @@ class ContentExplorer extends Component<Props, State> {
         return (
             <Internationalize language={language} messages={messages}>
                 <div id={this.id} className={styleClassName} ref={measureRef} data-testid="content-explorer">
-                    <div className="be-app-element" onKeyDown={this.onKeyDown} tabIndex={0}>
+                    <div className="be-app-element" onKeyDown={this.onKeyDown} tabIndex={0} ref={this.appRef}>
                         {!isDefaultViewMetadata && (
                             <>
                                 <Header
