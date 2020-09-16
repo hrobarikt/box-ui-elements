@@ -58,7 +58,7 @@ import {
 import type { Annotation } from '../../common/types/feed';
 import type { ErrorType, AdditionalVersionInfo } from '../common/flowTypes';
 import type { WithLoggerProps } from '../../common/types/logging';
-import type { FetchOptions, ErrorContextProps, ElementsXhrError } from '../../common/types/api';
+import type { RequestOptions, ErrorContextProps, ElementsXhrError } from '../../common/types/api';
 import type { StringMap, Token, BoxItem, BoxItemVersion } from '../../common/types/core';
 import type { VersionChangeCallback } from '../content-sidebar/versions';
 import type { FeatureConfig } from '../common/feature-checking';
@@ -761,6 +761,7 @@ class ContentPreview extends React.PureComponent<Props, State> {
 
         if (selectedVersion) {
             setProp(fileOpts, [fileId, 'fileVersionId'], selectedVersion.id);
+            setProp(fileOpts, [fileId, 'currentFileVersionId'], getProp(file, 'file_version.id'));
         }
 
         if (activeAnnotationId) {
@@ -792,7 +793,7 @@ class ContentPreview extends React.PureComponent<Props, State> {
         this.preview.addListener('thumbnailsClose', () => this.setState({ isThumbnailSidebarOpen: false }));
 
         if (showAnnotationsControls) {
-            this.preview.addListener('annotator', onAnnotator);
+            this.preview.addListener('annotator_create', onAnnotator);
         }
 
         this.preview.updateFileCache([file]);
@@ -895,7 +896,7 @@ class ContentPreview extends React.PureComponent<Props, State> {
         id: ?string,
         successCallback?: Function,
         errorCallback?: Function,
-        fetchOptions: FetchOptions = {},
+        fetchOptions: RequestOptions = {},
     ): void {
         if (!id) {
             return;
@@ -1145,15 +1146,16 @@ class ContentPreview extends React.PureComponent<Props, State> {
         });
     };
 
-    handleAnnotationSelect = ({ file_version: { id: annotationFileVersionId }, id, target }: Annotation) => {
+    handleAnnotationSelect = ({ file_version, id, target }: Annotation) => {
         const { location = {} } = target;
         const { file, selectedVersion } = this.state;
+        const annotationFileVersionId = getProp(file_version, 'id');
         const currentFileVersionId = getProp(file, 'file_version.id');
         const currentPreviewFileVersionId = getProp(selectedVersion, 'id', currentFileVersionId);
         const unit = startAtTypes[location.type];
         const viewer = this.getViewer();
 
-        if (unit && annotationFileVersionId !== currentPreviewFileVersionId) {
+        if (unit && annotationFileVersionId && annotationFileVersionId !== currentPreviewFileVersionId) {
             this.setState({
                 startAt: {
                     unit,
@@ -1326,11 +1328,11 @@ export type ContentPreviewProps = Props;
 export { ContentPreview as ContentPreviewComponent };
 export default flow([
     makeResponsive,
-    withFeatureProvider,
-    withLogger(ORIGIN_CONTENT_PREVIEW),
-    withErrorBoundary(ORIGIN_CONTENT_PREVIEW),
     withAnnotatorContext,
     withAnnotations,
     withRouter,
     withNavRouter,
+    withFeatureProvider,
+    withLogger(ORIGIN_CONTENT_PREVIEW),
+    withErrorBoundary(ORIGIN_CONTENT_PREVIEW),
 ])(ContentPreview);

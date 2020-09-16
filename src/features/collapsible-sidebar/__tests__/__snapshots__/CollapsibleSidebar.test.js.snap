@@ -4,8 +4,9 @@ exports[`components/core/collapsible-sidebar/CollapsibleSidebar render 1`] = `
 <aside
   className="bdl-CollapsibleSidebar-wrapper"
 >
-  <styled.nav
+  <CollapsibleSidebar__StyledNav
     className="is-expanded bdl-CollapsibleSidebar foo"
+    onKeyDown={[Function]}
   >
     <span
       key="1"
@@ -17,6 +18,6 @@ exports[`components/core/collapsible-sidebar/CollapsibleSidebar render 1`] = `
     >
       def
     </span>
-  </styled.nav>
+  </CollapsibleSidebar__StyledNav>
 </aside>
 `;

@@ -98,6 +98,10 @@ export const FIELD_RESTORED_FROM = 'restored_from';
 export const FIELD_CREATED_AT = 'created_at';
 export const FIELD_INTERACTED_AT: 'interacted_at' = 'interacted_at';
 export const FIELD_SHARED_LINK = 'shared_link';
+export const FIELD_SHARED_LINK_ACCESS_LEVELS_DISABLED_REASONS: 'allowed_shared_link_access_levels_disabled_reasons' =
+    'allowed_shared_link_access_levels_disabled_reasons';
+export const FIELD_SHARED_LINK_FEATURES: 'shared_link_features' = 'shared_link_features';
+export const FIELD_ALLOWED_INVITEE_ROLES: 'allowed_invitee_roles' = 'allowed_invitee_roles';
 export const FIELD_ALLOWED_SHARED_LINK_ACCESS_LEVELS = 'allowed_shared_link_access_levels';
 export const FIELD_HAS_COLLABORATIONS = 'has_collaborations';
 export const FIELD_IS_EXTERNALLY_OWNED = 'is_externally_owned';
@@ -140,6 +144,9 @@ export const FIELD_OCCURRED_AT: 'occurred_at' = 'occurred_at';
 export const FIELD_RENDERED_TEXT: 'rendered_text' = 'rendered_text';
 export const FIELD_RETENTION: 'retention' = 'retention';
 export const FIELD_UPLOADER_DISPLAY_NAME: 'uploader_display_name' = 'uploader_display_name';
+export const FIELD_CLASSIFICATION: 'classification' = 'classification';
+export const FIELD_ENTERPRISE: 'enterprise' = 'enterprise';
+export const FIELD_HOSTNAME: 'hostname' = 'hostname';
 
 /* ----------------------- Permissions --------------------------- */
 export const PERMISSION_CAN_COMMENT = 'can_comment';
@@ -153,6 +160,9 @@ export const PERMISSION_CAN_SET_SHARE_ACCESS = 'can_set_share_access';
 export const PERMISSION_CAN_SHARE = 'can_share';
 export const PERMISSION_CAN_UPLOAD = 'can_upload';
 export const PERMISSION_CAN_VIEW_ANNOTATIONS = 'can_view_annotations';
+
+/* --------------------- Invitee roles --------------------------- */
+export const INVITEE_ROLE_EDITOR: 'editor' = 'editor';
 
 /* ------------- Delimiters for bread crumbs ---------------- */
 export const DELIMITER_SLASH: 'slash' = 'slash';
@@ -172,6 +182,7 @@ export const DEFAULT_ROOT = '0';
 export const DEFAULT_SEARCH_DEBOUNCE = 500;
 export const DEFAULT_COLLAB_DEBOUNCE = 500;
 export const DEFAULT_MAX_COLLABORATORS = 25;
+export const DEFAULT_MAX_CONTACTS = 50;
 export const DEFAULT_PAGE_NUMBER = 1;
 export const DEFAULT_PAGE_SIZE = 50;
 export const DEFAULT_FETCH_START = 0;
@@ -179,14 +190,15 @@ export const DEFAULT_FETCH_END = 1000;
 export const DEFAULT_VIEW_FILES: 'files' = 'files';
 export const DEFAULT_VIEW_RECENTS: 'recents' = 'recents';
 export const DEFAULT_VIEW_METADATA: 'metadata' = 'metadata';
-export const CLIENT_NAME_CONTENT_PICKER = 'ContentPicker';
-export const CLIENT_NAME_FILE_PICKER = 'FilePicker';
-export const CLIENT_NAME_FOLDER_PICKER = 'FolderPicker';
-export const CLIENT_NAME_CONTENT_UPLOADER = 'ContentUploader';
-export const CLIENT_NAME_CONTENT_EXPLORER = 'ContentExplorer';
-export const CLIENT_NAME_CONTENT_PREVIEW = 'ContentPreview';
-export const CLIENT_NAME_CONTENT_SIDEBAR = 'ContentSidebar';
-export const CLIENT_NAME_OPEN_WITH = 'ContentOpenWith';
+export const CLIENT_NAME_CONTENT_EXPLORER: 'ContentExplorer' = 'ContentExplorer';
+export const CLIENT_NAME_OPEN_WITH: 'ContentOpenWith' = 'ContentOpenWith';
+export const CLIENT_NAME_CONTENT_PICKER: 'ContentPicker' = 'ContentPicker';
+export const CLIENT_NAME_CONTENT_PREVIEW: 'ContentPreview' = 'ContentPreview';
+export const CLIENT_NAME_CONTENT_SHARING: 'ContentSharing' = 'ContentSharing';
+export const CLIENT_NAME_CONTENT_SIDEBAR: 'ContentSidebar' = 'ContentSidebar';
+export const CLIENT_NAME_CONTENT_UPLOADER: 'ContentUploader' = 'ContentUploader';
+export const CLIENT_NAME_FILE_PICKER: 'FilePicker' = 'FilePicker';
+export const CLIENT_NAME_FOLDER_PICKER: 'FolderPicker' = 'FolderPicker';
 
 /* ---------------------- Statuses -------------------------- */
 export const STATUS_PENDING: 'pending' = 'pending';
@@ -194,6 +206,7 @@ export const STATUS_IN_PROGRESS: 'inprogress' = 'inprogress';
 export const STATUS_STAGED: 'staged' = 'staged';
 export const STATUS_COMPLETE: 'complete' = 'complete';
 export const STATUS_ERROR: 'error' = 'error';
+export const STATUS_ACCEPTED: 'accepted' = 'accepted';
 
 /* ------------------- Styles ------------------------ */
 export const CLASS_MODAL_CONTENT = 'be-modal-dialog-content';
@@ -215,6 +228,7 @@ export const ERROR_CODE_UPLOAD_CHILD_FOLDER_FAILED = 'child_folder_failed_upload
 export const ERROR_CODE_UPLOAD_STORAGE_LIMIT_EXCEEDED = 'storage_limit_exceeded';
 export const ERROR_CODE_UPLOAD_FILE_SIZE_LIMIT_EXCEEDED = 'file_size_limit_exceeded';
 export const ERROR_CODE_UPLOAD_PENDING_APP_FOLDER_SIZE_LIMIT = 'pending_app_folder_size_limit';
+export const ERROR_CODE_FETCH_ACTIVITY = 'fetch_activity_error';
 export const ERROR_CODE_FETCH_ANNOTATION = 'fetch_annotation_error';
 export const ERROR_CODE_FETCH_ANNOTATIONS = 'fetch_annotations_error';
 export const ERROR_CODE_FETCH_FILE = 'fetch_file_error';
@@ -227,6 +241,8 @@ export const ERROR_CODE_FETCH_VERSION = 'fetch_version_error';
 export const ERROR_CODE_FETCH_VERSIONS = 'fetch_versions_error';
 export const ERROR_CODE_FETCH_TASKS = 'fetch_tasks_error';
 export const ERROR_CODE_FETCH_CURRENT_USER = 'fetch_current_user_error';
+export const ERROR_CODE_FETCH_ENTERPRISE_GROUPS: 'fetch_enterprise_groups_error' = 'fetch_enterprise_groups_error';
+export const ERROR_CODE_FETCH_ENTERPRISE_USERS: 'fetch_enterprise_users_error' = 'fetch_enterprise_users_error';
 export const ERROR_CODE_FETCH_TASK_ASSIGNMENT = 'fetch_task_assignment_error';
 export const ERROR_CODE_FETCH_TASK_COLLABORATOR = 'fetch_task_collaborator_error';
 export const ERROR_CODE_FETCH_INTEGRATIONS = 'fetch_integrations_error';

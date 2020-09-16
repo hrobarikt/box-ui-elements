@@ -63,7 +63,7 @@ import {
     TYPED_ID_FOLDER_PREFIX,
 } from '../../constants';
 import type { ViewMode } from '../common/flowTypes';
-import type { MetadataQuery, MetadataColumnsToShow } from '../../common/types/metadataQueries';
+import type { MetadataQuery, FieldsToShow } from '../../common/types/metadataQueries';
 import type { MetadataFieldValue } from '../../common/types/metadata';
 import type {
     View,
@@ -104,6 +104,7 @@ type Props = {
     currentFolderId?: string,
     defaultView: DefaultView,
     features: FeatureConfig,
+    fieldsToShow?: FieldsToShow,
     initialPage: number,
     initialPageSize: number,
     isLarge: boolean,
@@ -115,8 +116,7 @@ type Props = {
     logoUrl?: string,
     measureRef?: Function,
     messages?: StringMap,
-    metadataColumnsToShow: MetadataColumnsToShow,
-    metadataQuery: MetadataQuery,
+    metadataQuery?: MetadataQuery,
     onCreate: Function,
     onDelete: Function,
     onDownload: Function,
@@ -388,7 +388,7 @@ class ContentExplorer extends Component<Props, State> {
      * @return {void}
      */
     showMetadataQueryResults() {
-        const { metadataQuery }: Props = this.props;
+        const { metadataQuery = {} }: Props = this.props;
         const { currentPageNumber, markers }: State = this.state;
         const metadataQueryClone = cloneDeep(metadataQuery);
 
@@ -1524,7 +1524,7 @@ class ContentExplorer extends Component<Props, State> {
             if (item.id === clonedItem.id) {
                 const fields = getProp(clonedItem, 'metadata.enterprise.fields', []);
                 fields.forEach(itemField => {
-                    if (itemField.name === field) {
+                    if (itemField.key.split('.').pop() === field) {
                         itemField.value = newValue; // set updated metadata value to correct item in currentCollection
                     }
                 });
@@ -1571,7 +1571,7 @@ class ContentExplorer extends Component<Props, State> {
             logoUrl,
             measureRef,
             messages,
-            metadataColumnsToShow,
+            fieldsToShow,
             onDownload,
             onPreview,
             onUpload,
@@ -1672,7 +1672,7 @@ class ContentExplorer extends Component<Props, State> {
                             isMedium={isMedium}
                             isSmall={isSmall}
                             isTouch={isTouch}
-                            metadataColumnsToShow={metadataColumnsToShow}
+                            fieldsToShow={fieldsToShow}
                             onItemClick={this.onItemClick}
                             onItemDelete={this.delete}
                             onItemDownload={this.download}

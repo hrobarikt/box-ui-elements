@@ -3,7 +3,7 @@
 exports[`features/unified-share-modal/UnifiedShareModal render() should not render a default component FTUX when prop is false 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".toggle-simple"
     style={
       Object {
@@ -43,6 +43,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should not rend
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={false}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -95,7 +96,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should not rend
 exports[`features/unified-share-modal/UnifiedShareModal render() should not render a default component FTUX when state is false 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".toggle-simple"
     style={
       Object {
@@ -135,6 +136,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should not rend
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={false}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -187,7 +189,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should not rend
 exports[`features/unified-share-modal/UnifiedShareModal render() should render a component with autofocus set for shared link when focusSharedLinkOnLoad is enabled and there is a shared link 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".toggle-simple"
     style={
       Object {
@@ -227,6 +229,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={true}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -282,7 +285,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
 exports[`features/unified-share-modal/UnifiedShareModal render() should render a default component FTUX based on enabled prop and state 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".toggle-simple"
     style={
       Object {
@@ -322,6 +325,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={false}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -374,7 +378,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
 exports[`features/unified-share-modal/UnifiedShareModal render() should render a default component in initial loading state 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".toggle-simple"
     style={
       Object {
@@ -414,6 +418,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={false}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -465,7 +470,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
 exports[`features/unified-share-modal/UnifiedShareModal render() should render a default component when showing invite section expanded 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".toggle-simple"
     style={
       Object {
@@ -505,6 +510,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={false}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -556,7 +562,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
 exports[`features/unified-share-modal/UnifiedShareModal render() should render a default component when the user cannot invite collaborators due to item type of weblink 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".toggle-simple"
     style={
       Object {
@@ -597,6 +603,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={false}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -648,7 +655,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
 exports[`features/unified-share-modal/UnifiedShareModal render() should render a default component when the user cannot invite collaborators due to permissions 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".toggle-simple"
     style={
       Object {
@@ -689,6 +696,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={false}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -740,7 +748,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
 exports[`features/unified-share-modal/UnifiedShareModal render() should render a default component with collaboration restriction warning specified and invite section is NOT expanded 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".bdl-PillSelector-input"
     style={
       Object {
@@ -781,6 +789,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={false}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -832,7 +841,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
 exports[`features/unified-share-modal/UnifiedShareModal render() should render a default component with collaboration restriction warning specified and invite section is expanded 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".bdl-PillSelector-input"
     style={
       Object {
@@ -873,6 +882,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={false}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -924,7 +934,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
 exports[`features/unified-share-modal/UnifiedShareModal render() should render a default component with collaborator list if showCollaboratorList state is set 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".toggle-simple"
     style={
       Object {
@@ -973,6 +983,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={false}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -1024,7 +1035,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
 exports[`features/unified-share-modal/UnifiedShareModal render() should render a default component with confirm modal open 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".toggle-simple"
     isOpen={false}
     style={
@@ -1065,6 +1076,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={false}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -1121,7 +1133,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
 exports[`features/unified-share-modal/UnifiedShareModal render() should render a default component with correct Focus element and props when focusSharedLinkOnLoad is enabled 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".toggle-simple"
     style={
       Object {
@@ -1161,6 +1173,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={true}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -1216,7 +1229,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
 exports[`features/unified-share-modal/UnifiedShareModal render() should render a default component with default props 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".toggle-simple"
     style={
       Object {
@@ -1256,6 +1269,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={false}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -1307,7 +1321,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
 exports[`features/unified-share-modal/UnifiedShareModal render() should render a default component with invitee permissions listed 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".bdl-PillSelector-input"
     style={
       Object {
@@ -1348,6 +1362,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={false}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -1397,7 +1412,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
 exports[`features/unified-share-modal/UnifiedShareModal render() should render a default component with send invite error specified 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".bdl-PillSelector-input"
     style={
       Object {
@@ -1438,6 +1453,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={false}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}
@@ -1494,7 +1510,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
 exports[`features/unified-share-modal/UnifiedShareModal render() should render a default component with upgrade CTA when showUpgradeOptions is enabled 1`] = `
 <Fragment>
   <Modal
-    className="unified-share-modal"
+    className="be-modal unified-share-modal"
     focusElementSelector=".bdl-PillSelector-input"
     style={
       Object {
@@ -1535,6 +1551,7 @@ exports[`features/unified-share-modal/UnifiedShareModal render() should render a
         }
       }
       createSharedLinkOnLoad={false}
+      displayInModal={true}
       focusSharedLinkOnLoad={false}
       getInitialData={[MockFunction]}
       handleFtuxCloseClick={[Function]}

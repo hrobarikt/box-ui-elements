@@ -6,23 +6,46 @@ import { ButtonType } from '../../../../components/button';
 
 export interface AnnotationActivityLinkProps {
     id: string;
+    isDisabled: boolean;
     message: MessageDescriptor;
     onClick: (id: string) => void;
 }
 
-const AnnotationActivityLink = ({ id, message, onClick = noop }: AnnotationActivityLinkProps): JSX.Element => {
-    const handleClick = (event: React.SyntheticEvent) => {
+const AnnotationActivityLink = ({
+    id,
+    isDisabled = false,
+    message,
+    onClick = noop,
+    ...rest
+}: AnnotationActivityLinkProps): JSX.Element => {
+    const handleClick = (event: React.SyntheticEvent<HTMLButtonElement>) => {
         event.preventDefault();
         event.stopPropagation();
-        // Prevents document event handlers from executing because box-annotations relies on
-        // detecting clicks on the document outside of annotation targets to determine when to
-        // deselect annotations. This link also may represent that annotation target in the sidebar.
-        event.nativeEvent.stopImmediatePropagation();
+        event.currentTarget.focus(); // Buttons do not receive focus in Firefox and Safari on MacOS
 
         onClick(id);
     };
+
+    const handleMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (isDisabled) {
+            return;
+        }
+
+        // Prevents document event handlers from executing because box-annotations relies on
+        // detecting mouse events on the document outside of annotation targets to determine when to
+        // deselect annotations. This link also may represent that annotation target in the sidebar.
+        event.nativeEvent.stopImmediatePropagation();
+    };
+
     return (
-        <PlainButton className="bcs-AnnotationActivity-link" onClick={handleClick} type={ButtonType.BUTTON}>
+        <PlainButton
+            className="bcs-AnnotationActivity-link"
+            isDisabled={isDisabled}
+            onClick={handleClick}
+            onMouseDown={handleMouseDown}
+            type={ButtonType.BUTTON}
+            {...rest}
+        >
             <FormattedMessage {...message} />
         </PlainButton>
     );

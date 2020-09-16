@@ -2,7 +2,7 @@
 import * as React from 'react';
 import getProp from 'lodash/get';
 import noop from 'lodash/noop';
-import type { ContextRouter } from 'react-router-dom';
+import { matchPath, type ContextRouter } from 'react-router-dom';
 import { getBadUserError } from '../../utils/error';
 import type { WithAnnotatorContextProps } from '../common/annotator-context';
 import type { BoxItem, User } from '../../common/types/core';
@@ -56,8 +56,8 @@ export default function withSidebarAnnotations(
         };
 
         componentDidUpdate(prevProps: Props) {
-            const { annotatorState, getAnnotationsMatchPath, location }: Props = this.props;
-            const { annotatorState: prevAnnotatorState, location: prevLocation }: Props = prevProps;
+            const { annotatorState, fileId, getAnnotationsMatchPath, location, onVersionChange }: Props = this.props;
+            const { annotatorState: prevAnnotatorState, fileId: prevFileId, location: prevLocation }: Props = prevProps;
             const { activeAnnotationId, annotation } = annotatorState;
             const { activeAnnotationId: prevActiveAnnotationId, annotation: prevAnnotation } = prevAnnotatorState;
 
@@ -80,8 +80,14 @@ export default function withSidebarAnnotations(
                 this.updateActiveAnnotation();
             }
 
-            if (prevFileVersionId !== fileVersionId) {
+            if (fileVersionId && prevFileVersionId !== fileVersionId) {
                 this.updateActiveVersion();
+            }
+
+            if (prevFileId !== fileId) {
+                // If the file id has changed, reset the current version id since the previous (possibly versioned)
+                // location is no longer active
+                onVersionChange(null);
             }
         }
 
@@ -92,7 +98,6 @@ export default function withSidebarAnnotations(
                 currentUser,
                 file,
                 fileId,
-                getAnnotationsMatchPath,
                 isOpen,
                 location,
             } = this.props;
@@ -107,7 +112,8 @@ export default function withSidebarAnnotations(
             }
 
             const feedAPI = api.getFeedAPI(false);
-            const isAnnotationsPath = !!getAnnotationsMatchPath(location);
+            const pathname = getProp(location, 'pathname', '');
+            const isActivity = matchPath(pathname, '/activity');
             const isPending = action === 'create_start';
             const { items: hasItems } = feedAPI.getCachedItems(fileId) || {};
             const { current } = this.sidebarPanels;
@@ -118,15 +124,15 @@ export default function withSidebarAnnotations(
                 feedAPI.addAnnotation(file, currentUser, annotation, requestId, isPending);
             }
 
-            if (isAnnotationsPath && isOpen && current) {
-                // If the sidebar is currently open, then force the sidebar to refresh with the updated data
+            // If the activity sidebar is currently open, then force it to refresh with the updated data
+            if (current && isActivity && isOpen) {
                 current.refresh(false);
             }
         }
 
         updateActiveAnnotation = () => {
             const {
-                annotatorState: { activeAnnotationId },
+                annotatorState: { activeAnnotationFileVersionId, activeAnnotationId },
                 file,
                 getAnnotationsMatchPath,
                 getAnnotationsPath,
@@ -135,7 +141,8 @@ export default function withSidebarAnnotations(
             } = this.props;
             const match = getAnnotationsMatchPath(location);
             const currentFileVersionId = getProp(file, 'file_version.id');
-            const fileVersionId = getProp(match, 'params.fileVersionId', currentFileVersionId);
+            const defaultFileVersionId = activeAnnotationFileVersionId || currentFileVersionId;
+            const fileVersionId = getProp(match, 'params.fileVersionId', defaultFileVersionId);
             const newLocationState = activeAnnotationId ? { open: true } : location.state;
 
             // Update the location pathname and open state if transitioning to an active annotation id, force the sidebar open

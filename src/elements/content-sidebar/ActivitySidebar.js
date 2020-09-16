@@ -27,6 +27,7 @@ import { withLogger } from '../common/logger';
 import { withRouterAndRef } from '../common/routing';
 import {
     DEFAULT_COLLAB_DEBOUNCE,
+    ERROR_CODE_FETCH_ACTIVITY,
     ORIGIN_ACTIVITY_SIDEBAR,
     SIDEBAR_VIEW_ACTIVITY,
     TASK_COMPLETION_RULE_ALL,
@@ -442,11 +443,20 @@ class ActivitySidebar extends React.PureComponent<Props, State> {
      * @param {Error} e - API error
      * @return {void}
      */
-    fetchFeedItemsErrorCallback = (feedItems: FeedItems): void => {
+    fetchFeedItemsErrorCallback = (feedItems: FeedItems, errors: ElementsXhrError[]): void => {
+        const { onError } = this.props;
+
         this.setState({
             feedItems,
             activityFeedError: activityFeedInlineError,
         });
+
+        if (Array.isArray(errors) && errors.length) {
+            onError(new Error('Fetch feed items error'), ERROR_CODE_FETCH_ACTIVITY, {
+                showNotification: true,
+                errors: errors.map(({ code }) => code),
+            });
+        }
     };
 
     /**
@@ -596,10 +606,7 @@ class ActivitySidebar extends React.PureComponent<Props, State> {
     };
 
     handleAnnotationSelect = (annotation: Annotation): void => {
-        const {
-            file_version: { id: annotationFileVersionId },
-            id: nextActiveAnnotationId,
-        } = annotation;
+        const { file_version, id: nextActiveAnnotationId } = annotation;
         const {
             emitAnnotatorActiveChangeEvent,
             file,
@@ -609,13 +616,14 @@ class ActivitySidebar extends React.PureComponent<Props, State> {
             location,
             onAnnotationSelect,
         } = this.props;
+        const annotationFileVersionId = getProp(file_version, 'id');
         const currentFileVersionId = getProp(file, 'file_version.id');
         const match = getAnnotationsMatchPath(location);
         const selectedFileVersionId = getProp(match, 'params.fileVersionId', currentFileVersionId);
 
         emitAnnotatorActiveChangeEvent(nextActiveAnnotationId);
 
-        if (annotationFileVersionId !== selectedFileVersionId) {
+        if (annotationFileVersionId && annotationFileVersionId !== selectedFileVersionId) {
             history.push(getAnnotationsPath(annotationFileVersionId, nextActiveAnnotationId));
         }
 

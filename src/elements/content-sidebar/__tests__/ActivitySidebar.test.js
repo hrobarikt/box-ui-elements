@@ -412,6 +412,20 @@ describe('elements/content-sidebar/ActivitySidebar', () => {
                 feedItems,
                 activityFeedError: activityFeedInlineError,
             });
+            expect(onError).not.toHaveBeenCalled();
+        });
+
+        test('should call onError if errors is not empty', () => {
+            instance.fetchFeedItemsErrorCallback(feedItems, []);
+
+            expect(onError).not.toHaveBeenCalled();
+
+            instance.fetchFeedItemsErrorCallback(feedItems, [{ code: '0' }, { code: '1' }]);
+
+            expect(onError).toHaveBeenCalledWith(expect.any(Error), 'fetch_activity_error', {
+                showNotification: true,
+                errors: ['0', '1'],
+            });
         });
     });
 
@@ -732,6 +746,19 @@ describe('elements/content-sidebar/ActivitySidebar', () => {
 
             expect(emitAnnotatorActiveChangeEvent).toHaveBeenCalledWith('124');
             expect(history.push).toHaveBeenCalledWith('/activity/annotations/235/124');
+            expect(onAnnotationSelect).toHaveBeenCalledWith(annotation);
+        });
+
+        test('should not call history.push if no file version id on the annotation', () => {
+            const wrapper = getAnnotationWrapper();
+            const instance = wrapper.instance();
+            const annotation = { file_version: null, id: '124' };
+            getAnnotationsMatchPath.mockReturnValue({ params: { fileVersionId: undefined } });
+
+            instance.handleAnnotationSelect(annotation);
+
+            expect(emitAnnotatorActiveChangeEvent).toHaveBeenCalledWith('124');
+            expect(history.push).not.toHaveBeenCalled();
             expect(onAnnotationSelect).toHaveBeenCalledWith(annotation);
         });
     });

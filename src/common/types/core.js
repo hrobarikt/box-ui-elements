@@ -4,6 +4,7 @@ import {
     ACCESS_OPEN,
     ACCESS_COLLAB,
     ACCESS_COMPANY,
+    ACCESS_NONE,
     VIEW_SEARCH,
     VIEW_FOLDER,
     VIEW_ERROR,
@@ -30,6 +31,8 @@ import {
     VERSION_RETENTION_DELETE_ACTION,
     VERSION_RETENTION_REMOVE_ACTION,
     VERSION_RETENTION_INDEFINITE,
+    PERMISSION_CAN_DOWNLOAD,
+    PERMISSION_CAN_PREVIEW,
 } from '../../constants';
 import type { MetadataType } from './metadata';
 
@@ -71,14 +74,13 @@ type Order = {
     direction: SortDirection,
 };
 
-type Access = typeof ACCESS_COLLAB | typeof ACCESS_COMPANY | typeof ACCESS_OPEN;
+type Access = typeof ACCESS_COLLAB | typeof ACCESS_COMPANY | typeof ACCESS_OPEN | typeof ACCESS_NONE;
 
-type SharedLink = {
-    access: Access,
-    url: string,
-};
+type NoticeType = 'info' | 'error';
 
-type InlineNoticeType = 'warning' | 'error' | 'success' | 'info' | 'generic';
+type InlineNoticeType = NoticeType | 'warning' | 'success' | 'generic';
+
+type NotificationType = NoticeType | 'default' | 'warn';
 
 type ItemType = typeof ITEM_TYPE_FOLDER | typeof ITEM_TYPE_FILE | typeof ITEM_TYPE_WEBLINK;
 
@@ -97,16 +99,19 @@ type FolderMini = {
 type UserMini = {
     avatar_url?: string,
     email?: string,
+    enterprise?: {
+        id: string,
+        name: string,
+        type: 'enterprise',
+    },
+    hostname?: string,
     id: string,
     login?: string,
     name: string,
     type: 'user',
 };
 
-type User = UserMini;
-
-type UserCollection = {
-    entries?: Array<User>,
+type ContactCollection = {
     isLoaded?: boolean,
     limit?: number,
     next_marker?: string,
@@ -116,10 +121,23 @@ type UserCollection = {
     total_count?: number,
 };
 
+type User = UserMini;
+
+type UserCollection = ContactCollection & {
+    entries?: Array<User>,
+};
+
 type GroupMini = {
     id: string,
     name: string,
+    permissions?: {
+        can_invite_as_collaborator: boolean,
+    },
     type: 'group',
+};
+
+type GroupCollection = ContactCollection & {
+    entries?: Array<GroupMini>,
 };
 
 type ISODate = string;
@@ -146,18 +164,28 @@ type Crumb = {
     name: string,
 };
 
+type BoxItemClassification = {
+    color: string,
+    definition: string,
+    name: string,
+};
+
 type BoxItemPermission = {
+    can_annotate?: boolean,
     can_comment?: boolean,
     can_create_annotations?: boolean,
     can_delete?: boolean,
     can_download?: boolean,
     can_edit?: boolean,
+    can_invite_collaborator?: boolean,
     can_preview?: boolean,
     can_rename?: boolean,
     can_set_share_access?: boolean,
     can_share?: boolean,
     can_upload?: boolean,
     can_view_annotations?: boolean,
+    can_view_annotations_all?: boolean,
+    can_view_annotations_self?: boolean,
 };
 
 type BoxItemVersionPermission = {
@@ -243,6 +271,28 @@ type FileRepresentationResponse = {
     entries: Array<FileRepresentation>,
 };
 
+type SharedLink = {
+    access: Access,
+    download_count?: number,
+    download_url?: string,
+    effective_access?: Access,
+    effective_permission?: typeof PERMISSION_CAN_DOWNLOAD | typeof PERMISSION_CAN_PREVIEW,
+    is_password_enabled?: boolean,
+    password?: string | null, // the API requires a null value to remove a password
+    permissions?: BoxItemPermission,
+    preview_count?: number,
+    unshared_at?: string | null,
+    url: string,
+    vanity_name?: string,
+    vanity_url?: string,
+};
+
+type SharedLinkFeatures = {
+    download_url: boolean,
+    password: boolean,
+    vanity_name: boolean,
+};
+
 type BoxItem = {
     allowed_shared_link_access_levels?: Array<Access>,
     authenticated_download_url?: string,
@@ -272,6 +322,7 @@ type BoxItem = {
     restored_from?: BoxItemVersion,
     selected?: boolean,
     shared_link?: SharedLink,
+    shared_link_features?: SharedLinkFeatures,
     size?: number,
     thumbnailUrl?: ?string,
     type?: ItemType,
@@ -372,6 +423,46 @@ type Reply = {
     type: 'reply',
 };
 
+type Collaborators = {
+    entries: Array<GroupMini | UserMini>,
+    next_marker: ?string,
+};
+
+type AccessibleByUserOrGroup = {
+    id: number | string,
+    login: string,
+    name: string,
+    type: 'user' | 'group',
+};
+
+type CollaborationOptions = {
+    expires_at: string | null,
+    id: number | string,
+    role: string,
+    status?: string,
+};
+
+type Collaboration = CollaborationOptions & {
+    accessible_by: AccessibleByUserOrGroup,
+};
+
+type NewCollaboration = CollaborationOptions & {
+    accessible_by: $Shape<AccessibleByUserOrGroup>,
+};
+
+type Collaborations = {
+    entries: Array<Collaboration>,
+    next_marker: ?string,
+};
+
+// reflects an IE11 specific object to support drag
+// and drop for file uploads
+type DOMStringList = {
+    contains: (strToSearch: string) => boolean,
+    item: (index: number) => string | null,
+    length: number,
+};
+
 export type {
     Token,
     TokenLiteral,
@@ -397,11 +488,13 @@ export type {
     User,
     UserCollection,
     GroupMini,
+    GroupCollection,
     ISODate,
     MarkerPaginatedCollection,
     SelectorItem,
     SelectorItems,
     Crumb,
+    BoxItemClassification,
     BoxItemPermission,
     BoxItemVersionPermission,
     BoxItemVersionRetention,
@@ -417,4 +510,10 @@ export type {
     FileVersions,
     FileRepresentation,
     Reply,
+    NotificationType,
+    Collaborators,
+    Collaboration,
+    Collaborations,
+    NewCollaboration,
+    DOMStringList,
 };

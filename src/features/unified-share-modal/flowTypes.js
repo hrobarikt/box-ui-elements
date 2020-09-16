@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
-import type { ItemType } from '../../common/types/core';
 import * as constants from './constants';
+import type { BoxItemPermission, ItemType } from '../../common/types/core';
 
 // DRY: Invert the constants so that we can construct the appropriate enum types
 const accessLevelValues = {
@@ -38,12 +38,12 @@ export type accessLevelsDisabledReasonType = {
 
 export type contactType = {
     email?: string,
-    id: number | string,
+    id: string,
     isExternalUser?: boolean,
     name?: string,
     text?: string,
     type: string,
-    value?: number | string,
+    value?: string,
 };
 
 export type SuggestedCollab = contactType & {
@@ -65,7 +65,7 @@ export type item = {
     bannerPolicy?: {
         body: string,
         colorID?: number,
-        title: string,
+        title?: string,
     },
     canUserSeeClassification: boolean,
     classification?: string,
@@ -75,8 +75,11 @@ export type item = {
         itemShare: boolean,
     },
     hideCollaborators: boolean,
-    id: number,
+    id: string,
     name: string,
+    ownerEmail?: string,
+    ownerID?: string,
+    permissions?: BoxItemPermission,
     type: ItemType,
     typedID: string,
 };
@@ -261,6 +264,11 @@ type EmailFormTypes = {
     sendSharedLinkError: React.Node,
 };
 
+export type USMConfig = {
+    /** Whether the "Email Shared Link" button and form should be rendered in the USM/USF */
+    showEmailSharedLinkForm: boolean,
+};
+
 // Prop types shared by both the Unified Share Modal and the Unified Share Form
 type BaseUnifiedShareProps = CollaboratorAvatarsTypes &
     EmailFormTypes &
@@ -270,6 +278,10 @@ type BaseUnifiedShareProps = CollaboratorAvatarsTypes &
         allShareRestrictionWarning?: React.Node,
         /** Flag to determine whether to enable invite collaborators section */
         canInvite: boolean,
+        /** Configuration object for hiding parts of the USM */
+        config?: USMConfig,
+        /** Whether the full USM should be rendered */
+        displayInModal?: boolean,
         /** Whether the form should focus the shared link after the URL is resolved */
         focusSharedLinkOnLoad?: boolean,
         /** Handler function that gets contacts by a list of emails */
@@ -286,8 +298,6 @@ type BaseUnifiedShareProps = CollaboratorAvatarsTypes &
         item: item,
         /** Shows a callout tooltip next to the names / email addresses input field encouraging users to fill out coworkers contact info */
         showEnterEmailsCallout?: boolean,
-        /** Whether only the USF should be rendered */
-        showFormOnly?: boolean,
         /** Whether or not a request is in progress */
         submitting: boolean,
         /** Object with props and handlers for tracking interactions */
@@ -298,6 +308,8 @@ type BaseUnifiedShareProps = CollaboratorAvatarsTypes &
 export type USMProps = BaseUnifiedShareProps & {
     /** Function for closing the Remove Link Confirm Modal */
     closeConfirmModal: () => void,
+    /** Whether initial data for the USM has already been received */
+    initialDataReceived: boolean,
     /** Whether the USM is open */
     isOpen?: boolean,
     /** Handler function that removes the shared link, used in the Remove Link Confirm Modal */
@@ -318,4 +330,13 @@ export type USFProps = BaseUnifiedShareProps & {
     sharedLinkLoaded: boolean,
     /** Whether the FTUX tooltip should be rendered */
     shouldRenderFTUXTooltip: boolean,
+};
+
+export type InviteCollaboratorsRequest = {
+    emailMessage: string,
+    emails: string,
+    groupIDs: string,
+    numOfInviteeGroups: number,
+    numsOfInvitees: number,
+    permission: string,
 };
