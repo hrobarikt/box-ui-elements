@@ -21,6 +21,7 @@ export default (
     onItemShare: Function,
     onItemPreview: Function,
     isSmall: boolean,
+    rootElement: HTMLElement,
 ) => ({ rowData }: { rowData: BoxItem }) => (
     <MoreOptions
         canPreview={canPreview}
@@ -36,5 +37,6 @@ export default (
         onItemPreview={onItemPreview}
         isSmall={isSmall}
         item={rowData}
+        rootElement={rootElement}
     />
 );

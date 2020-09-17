@@ -99,6 +99,7 @@ const ItemList = ({
         onItemShare,
         onItemPreview,
         isSmall,
+        rootElement,
     );
     const isRecents: boolean = view === VIEW_RECENTS;
     const hasSort: boolean = view === VIEW_FOLDER;

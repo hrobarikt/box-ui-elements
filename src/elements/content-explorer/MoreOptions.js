@@ -48,6 +48,7 @@ const MoreOptions = ({
     onItemPreview,
     isSmall,
     item,
+    rootElement,
 }: Props) => {
     const onFocus = () => onItemSelect(item);
     const onDelete = () => onItemDelete(item);
@@ -76,7 +77,7 @@ const MoreOptions = ({
     }
     return (
         <div className="bce-more-options">
-            <DropdownMenu constrainToScrollParent isRightAligned>
+            <DropdownMenu constrainToScrollParent isRightAligned bodyElement={rootElement}>
                 <Button
                     className="bce-btn-more-options"
                     data-testid="bce-btn-more-options"
