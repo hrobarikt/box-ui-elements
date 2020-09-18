@@ -75,9 +75,11 @@ const MoreOptions = ({
     if (!allowed) {
         return <span />;
     }
+    const rootNode = rootElement.getRootNode();
+    const bodyEl = rootNode instanceof HTMLDocument ? document.body : rootNode;
     return (
         <div className="bce-more-options">
-            <DropdownMenu constrainToScrollParent isRightAligned bodyElement={rootElement}>
+            <DropdownMenu constrainToScrollParent isRightAligned bodyElement={bodyEl}>
                 <Button
                     className="bce-btn-more-options"
                     data-testid="bce-btn-more-options"

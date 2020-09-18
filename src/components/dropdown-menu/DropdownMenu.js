@@ -154,8 +154,9 @@ class DropdownMenu extends React.Component<Props, State> {
     };
 
     handleDocumentClick = (event: MouseEvent) => {
-        const menuEl = document.getElementById(this.menuID);
-        const menuButtonEl = document.getElementById(this.menuButtonID);
+        const rootNode = this.props.bodyElement ? this.props.bodyElement.getRootNode() : document;
+        const menuEl = rootNode.getElementById(this.menuID);
+        const menuButtonEl = rootNode.getElementById(this.menuButtonID);
 
         // Some DOM magic to get global click handlers to close menu when not interacting with menu or associated button
         if (
@@ -237,7 +238,8 @@ class DropdownMenu extends React.Component<Props, State> {
             });
         }
 
-        const bodyEl = bodyElement instanceof HTMLElement ? bodyElement : document.body;
+        const bodyEl =
+            bodyElement instanceof HTMLElement || bodyElement instanceof ShadowRoot ? bodyElement : document.body;
 
         return (
             <TetherComponent
