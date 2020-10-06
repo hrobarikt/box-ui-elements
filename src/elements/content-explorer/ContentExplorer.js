@@ -262,6 +262,8 @@ class ContentExplorer extends Component<Props, State> {
         });
 
         this.appRef = React.createRef();
+        global.Box = global.Box || {};
+        global.Box.appElement = this.appRef;
 
         this.id = uniqueid('bce_');
 

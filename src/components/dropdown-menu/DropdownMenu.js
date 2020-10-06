@@ -238,8 +238,9 @@ class DropdownMenu extends React.Component<Props, State> {
             });
         }
 
-        const bodyEl =
-            bodyElement instanceof HTMLElement || bodyElement instanceof ShadowRoot ? bodyElement : document.body;
+        const rootNode = global.Box.appElement.current.getRootNode();
+
+        const bodyEl = bodyElement instanceof HTMLElement || bodyElement instanceof ShadowRoot ? bodyElement : rootNode;
 
         return (
             <TetherComponent
