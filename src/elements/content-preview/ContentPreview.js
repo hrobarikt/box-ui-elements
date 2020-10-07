@@ -773,7 +773,7 @@ class ContentPreview extends React.PureComponent<Props, State> {
         }
 
         const previewOptions = {
-            container: `#${this.id} .bcpr-content`,
+            container: Box.appElement.current.getRootNode().querySelector(`#${this.id} .bcpr-content`), // `#${this.id} .bcpr-content`,
             enableThumbnailsSidebar,
             fileOptions: fileOpts,
             header: 'none',
