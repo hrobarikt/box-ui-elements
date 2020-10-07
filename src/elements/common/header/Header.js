@@ -24,7 +24,9 @@ type Props = {
 
 // eslint-disable-next-line react/prop-types
 const Header = ({ view, isSmall, searchQuery, onSearch, logoUrl, intl }: Props) => {
-    const search = ({ currentTarget }: { currentTarget: HTMLInputElement }) => onSearch(currentTarget.value);
+    // TODO dirty workaround that will work only inside the shadowDOM with retargetEvents module
+    const search = ({ currentTarget }: { currentTarget: HTMLInputElement }) =>
+        onSearch(currentTarget.activeElement.value);
     const isFolder = view === VIEW_FOLDER;
     const isSearch = view === VIEW_SEARCH;
     return (
